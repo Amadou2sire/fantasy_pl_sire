@@ -28,14 +28,23 @@ export default function Dashboard() {
   const renderPlayersByPos = (pos) => {
     if (!dreamTeam || !dreamTeam.team) return null;
     const posPlayers = dreamTeam.team.filter(p => p.position === pos);
+
+    const posColors = {
+      "FWD": "bg-red-500",
+      "MID": "bg-emerald-500",
+      "DEF": "bg-blue-500",
+      "GKP": "bg-amber-500"
+    };
+    const activeColor = posColors[pos] || "bg-white/10";
+
     return (
       <div className="flex justify-center gap-4 md:gap-8 w-full relative z-10 mb-4">
         {posPlayers.map(p => (
           <div key={p.id} className="flex flex-col items-center">
-            <div className="w-12 h-12 bg-white/10 border border-white/20 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg backdrop-blur-sm mb-1">
+            <div className={`w-12 h-12 ${activeColor} border border-white/20 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg backdrop-blur-sm mb-1`}>
               {p.points}
             </div>
-            <div className="bg-[#1E40AF] px-2 py-0.5 rounded text-[10px] font-bold text-white whitespace-nowrap overflow-hidden text-ellipsis max-w-[80px]">
+            <div className="bg-slate-900/80 px-2 py-0.5 rounded text-[10px] font-bold text-white whitespace-nowrap overflow-hidden text-ellipsis max-w-[80px] border border-white/10">
               {p.name}
             </div>
           </div>
@@ -74,11 +83,15 @@ export default function Dashboard() {
             )}
           </section>
 
-          {/* Team of the Week Pitch (Static Template Layout) */}
-          <section className="bg-primary rounded-2xl overflow-hidden shadow-2xl relative">
-            <div className="min-h-[600px] w-full p-6 flex flex-col items-center relative bg-center bg-cover" style={{ backgroundImage: "linear-gradient(to bottom, rgba(15, 23, 41, 0.8), rgba(15, 23, 41, 0.95)), url('https://lh3.googleusercontent.com/aida-public/AB6AXuBQM4a0CD_tqd1qchsRcwIBFT_z-vFdFXUhVDLXlURrLsNqtpil1SDufZ7J3u22rtRn8GHYTlCWkVFEVEABDLzUMqAex-QDbxQeJ9L5qzGg9Drepc6GkpXDEGV5DXWjPPKBFRqzafcObnOf9bik_jEaYVPJadzXkyv9VLUAhq_49MRiRpSvwnTlQ8w1zsdzPPv-r5qGe8oJTdeOUc5i0o2bvNjoVVFHHuk7jPQ-GhtG_K_y_5TuUTGKYzf8KXJ_E9rNN2xW3E9zYCM')" }}>
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent"></div>
-              <h2 className="relative z-10 text-xl font-bold text-white mb-4 self-start flex items-center gap-2">
+          {/* Team of the Week Pitch (Dynamic Vertical Layout) */}
+          <section className="bg-emerald-900 rounded-2xl overflow-hidden shadow-2xl relative border-4 border-emerald-800/50">
+            <div className="min-h-[650px] w-full p-6 flex flex-col items-center relative bg-center bg-cover"
+              style={{ backgroundImage: "linear-gradient(to bottom, rgba(6, 78, 59, 0.8), rgba(6, 95, 70, 0.95)), url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=2670&auto=format&fit=crop')" }}>
+              <div className="absolute inset-0 opacity-10 pointer-events-none"
+                style={{ backgroundImage: "repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255,255,255,0.05) 40px, rgba(255,255,255,0.05) 80px)" }}></div>
+              <div className="absolute inset-x-0 top-1/2 h-px bg-white/20 z-0"></div>
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 border-2 border-white/20 rounded-full z-0"></div>
+              <h2 className="relative z-10 text-xl font-bold text-white mb-4 self-start flex items-center gap-2 drop-shadow-md">
                 <span className="material-symbols-outlined">star</span>
                 Team of the Week {dreamTeam?.gameweek ? `(GW ${dreamTeam.gameweek})` : ''}
               </h2>
