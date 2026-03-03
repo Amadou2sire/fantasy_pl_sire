@@ -1,0 +1,2 @@
+set PYTHONPATH=C:\Users\formation\.agents\skills\ui-ux-pro-max\src\ui-ux-pro-max\scripts
+C:\Users\formation\AppData\Local\Programs\Python\Python313\python.exe C:\Users\formation\.agents\skills\ui-ux-pro-max\src\ui-ux-pro-max\scripts\search.py "dashboard sports analytics professional" --design-system -p "FPL Dashboard" > C:\Users\formation\Downloads\saas\fantasy\fpl-dashboard\frontend\ux_output.md 2>&1
