@@ -15,7 +15,8 @@ python -m venv .venv
 # Sur Windows
 .venv\Scripts\activate
 pip install -r requirements.txt
-cp .env.example .env   # Ajoute ta clé AICC_API_KEY
+cp .env.example .env   # Ajoute ta clé AICC_API_KEY - TEST sk-u1AjEyl698WGZxlDnFfCmIaq83R6z5pjR5RaTxZO5AawD2uP
+
 uvicorn main:app --reload
 ```
 
