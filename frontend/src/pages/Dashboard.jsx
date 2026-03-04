@@ -166,7 +166,7 @@ export default function Dashboard() {
 
       {/* Footer */}
       <footer className="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-primary py-8 px-10 text-center">
-        <p className="text-slate-500 text-sm">© 2024 Fantasy League Manager. All rights reserved.</p>
+        <p className="text-slate-500 text-sm">© 2026 MEDIANET Fantasy League Manager. All rights reserved.</p>
       </footer>
     </>
   );

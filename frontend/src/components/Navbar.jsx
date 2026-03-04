@@ -11,7 +11,7 @@ export default function Navbar({ current, onChange }) {
         <div className="size-8 text-primary flex items-center justify-center">
           <span className="material-symbols-outlined text-4xl">sports_soccer</span>
         </div>
-        <h2 className="text-xl font-black tracking-tight uppercase">Fantasy League</h2>
+        <h2 className="text-xl font-black tracking-tight uppercase">MEDIANET Fantasy League</h2>
       </div>
 
       <div className="hidden md:flex gap-8 items-center">
