@@ -1,0 +1,125 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Setup DB schema (players, fixtures, gameweeks)",
+      "status": "COMPLETED",
+      "plan_approved": true,
+      "assigned_to": "Architecte",
+      "dependencies": []
+    },
+    {
+      "id": 2,
+      "title": "FPL API ingestion pipeline",
+      "status": "COMPLETED",
+      "plan_approved": true,
+      "assigned_to": "Data Specialist",
+      "dependencies": [
+        1
+      ]
+    },
+    {
+      "id": 3,
+      "title": "xG/xA stats calculator",
+      "status": "COMPLETED",
+      "plan_approved": true,
+      "assigned_to": "Data Specialist",
+      "dependencies": [
+        2
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Prediction scoring engine",
+      "status": "COMPLETED",
+      "plan_approved": true,
+      "assigned_to": "Backend",
+      "dependencies": [
+        3
+      ]
+    },
+    {
+      "id": 5,
+      "title": "REST API endpoints",
+      "status": "COMPLETED",
+      "plan_approved": true,
+      "assigned_to": "Backend",
+      "dependencies": [
+        1
+      ]
+    },
+    {
+      "id": 6,
+      "title": "React dashboard + team selector",
+      "status": "COMPLETED",
+      "plan_approved": true,
+      "assigned_to": "Frontend",
+      "dependencies": [
+        5
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Analytics charts + player comparator",
+      "status": "COMPLETED",
+      "plan_approved": true,
+      "assigned_to": "Frontend",
+      "dependencies": [
+        5
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Transfer optimizer UI",
+      "status": "COMPLETED",
+      "plan_approved": true,
+      "assigned_to": "Frontend",
+      "dependencies": [
+        4,
+        6
+      ]
+    },
+    {
+      "id": 9,
+      "title": "QA + edge cases",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Réviseur",
+      "dependencies": [
+        6,
+        7,
+        8
+      ]
+    }
+  ],
+  "members": [
+    {
+      "name": "JarvisBot",
+      "role": "Directeur"
+    },
+    {
+      "name": "Architecte",
+      "role": "Architecte"
+    },
+    {
+      "name": "Backend Specialist",
+      "role": "Backend"
+    },
+    {
+      "name": "Data Specialist",
+      "role": "Data"
+    },
+    {
+      "name": "Frontend Specialist",
+      "role": "Frontend"
+    },
+    {
+      "name": "Chercheur",
+      "role": "Chercheur"
+    },
+    {
+      "name": "Réviseur",
+      "role": "Réviseur"
+    }
+  ]
+}

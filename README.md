@@ -44,4 +44,4 @@ Le backend récupère les données via l'API officielle de la Premier League :
 
 Les données sont enrichies et filtrées côté backend (`fpl_client.py`) pour fournir des indicateurs comme l'Expected Goals (xG), l'Expected Assists (xA) et le FDR (Fixture Difficulty Rating).
 
-
+https://api.ai.cc/
