@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import logo from "../img/logo-medianet.png";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -23,13 +24,14 @@ export default function Navbar() {
 
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 flex-shrink-0" onClick={() => setOpen(false)}>
-          <div className="size-9 bg-emerald-100 rounded-xl flex items-center justify-center text-emerald-600 border border-emerald-200 shadow-sm">
-            <span className="material-symbols-outlined text-2xl">sports_soccer</span>
+          <div className="size-15 bg-white rounded-xl flex items-center justify-center p-1.5 border border-slate-100 shadow-sm overflow-hidden">
+            <img src={logo} alt="Medianet Logo" className="w-full h-full object-contain" />
           </div>
           <span className="text-base font-black tracking-tight uppercase text-slate-900 hidden sm:block">
-            MEDIANET <span className="text-emerald-500">Fantasy</span>
+           <span className="text-emerald-500">Fantasy Dashboard</span>
           </span>
         </Link>
+
 
         {/* Desktop nav */}
         <nav className="hidden md:flex gap-1">
