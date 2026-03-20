@@ -2,7 +2,8 @@
 from fastapi import FastAPI, Query, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
+
 import os
 from dotenv import load_dotenv
 import fpl_client as fpl
@@ -242,6 +243,16 @@ class AdviceRequest(BaseModel):
     team_id: Optional[int] = None
     league_id: Optional[int] = None
 
+class ChatMessageSchema(BaseModel):
+    role: str
+    content: str
+    created_at: Optional[datetime] = None
+    
+    class Config:
+        from_attributes = True
+
+
+
 
 
 class CompareRequest(BaseModel):
@@ -280,10 +291,33 @@ async def delete_template(template_id: int, db: Session = Depends(get_db)):
 @app.post("/api/ai/advice")
 async def ai_advice(body: AdviceRequest, db: Session = Depends(get_db)):
     try:
-        return {"answer": await ai.get_ai_advice(body.question, team_id=body.team_id, league_id=body.league_id, db=db)}
+        # 1. Save User Message
+        user_msg = models.ChatMessage(role="user", content=body.question)
+        db.add(user_msg)
+        
+        # 2. Get AI Answer
+        answer = await ai.get_ai_advice(body.question, team_id=body.team_id, league_id=body.league_id, db=db)
+        
+        # 3. Save AI Message
+        bot_msg = models.ChatMessage(role="bot", content=answer)
+        db.add(bot_msg)
+        db.commit()
+        
+        return {"answer": answer}
     except Exception as e:
-
+        db.rollback()
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/ai/history", response_model=List[ChatMessageSchema])
+def get_chat_history(db: Session = Depends(get_db)):
+    return db.query(models.ChatMessage).order_by(models.ChatMessage.created_at.asc()).all()
+
+@app.delete("/api/ai/history")
+def clear_chat_history(db: Session = Depends(get_db)):
+    db.query(models.ChatMessage).delete()
+    db.commit()
+    return {"status": "cleared"}
+
 
 
 @app.post("/api/ai/compare")

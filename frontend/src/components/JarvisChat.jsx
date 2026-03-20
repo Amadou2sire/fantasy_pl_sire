@@ -1,18 +1,38 @@
 import { useState, useEffect, useRef } from "react";
-import { getAIAdvice } from "../api/fpl";
+import { getAIAdvice, getChatHistory, clearChatHistory } from "../api/fpl";
 
 export default function JarvisChat() {
   const [isOpen, setIsOpen] = useState(false);
   const [question, setQuestion] = useState("");
-  const [messages, setMessages] = useState([
-    { role: "bot", content: "Hello! Je suis Jarvis, votre assistant FPL. Comment puis-je vous aider aujourd'hui ?" }
-  ]);
+  const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const chatEndRef = useRef(null);
 
   const scrollToBottom = () => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  // Load History
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const history = await getChatHistory();
+        if (history && history.length > 0) {
+          setMessages(history);
+        } else {
+          setMessages([
+            { role: "bot", content: "Hello! Je suis Jarvis, votre assistant FPL. Comment puis-je vous aider aujourd'hui ?" }
+          ]);
+        }
+      } catch (err) {
+        console.error("Failed to load chat history", err);
+        setMessages([
+          { role: "bot", content: "Hello! Je suis Jarvis, votre assistant FPL. Comment puis-je vous aider aujourd'hui ?" }
+        ]);
+      }
+    };
+    loadData();
+  }, []);
 
   useEffect(() => {
     if (isOpen) scrollToBottom();
@@ -36,6 +56,15 @@ export default function JarvisChat() {
     setLoading(false);
   };
 
+  const clearChat = async () => {
+    if (window.confirm("Voulez-vous vraiment effacer toute la discussion ?")) {
+      await clearChatHistory();
+      setMessages([
+        { role: "bot", content: "Discussion effacée. Comment puis-je vous aider ?" }
+      ]);
+    }
+  };
+
   return (
     <div className="fixed bottom-6 right-6 z-[9999] flex flex-col items-end gap-4 pointer-events-none">
       {/* Chat Window */}
@@ -52,9 +81,18 @@ export default function JarvisChat() {
                 <span className="text-sm font-black uppercase tracking-tighter">JarvisBot</span>
               </div>
             </div>
-            <button onClick={() => setIsOpen(false)} className="size-8 rounded-full hover:bg-white/10 flex items-center justify-center transition-all">
-              <span className="material-symbols-outlined text-xl">close</span>
-            </button>
+            <div className="flex items-center gap-1">
+              <button 
+                onClick={clearChat}
+                title="Effacer la discussion"
+                className="size-8 rounded-full hover:bg-white/10 flex items-center justify-center transition-all text-slate-400 hover:text-white"
+              >
+                <span className="material-symbols-outlined text-lg">delete_sweep</span>
+              </button>
+              <button onClick={() => setIsOpen(false)} className="size-8 rounded-full hover:bg-white/10 flex items-center justify-center transition-all">
+                <span className="material-symbols-outlined text-xl">close</span>
+              </button>
+            </div>
           </div>
 
           {/* Messages */}
@@ -113,3 +151,4 @@ export default function JarvisChat() {
     </div>
   );
 }
+
