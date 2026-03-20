@@ -150,8 +150,8 @@ async def get_fixtures_with_teams(gameweek: Optional[int] = None) -> list[dict]:
 
     result = []
     for f in fixtures:
-        if f.get("finished") and not gameweek:
-            continue
+        # Include all matches (finished and upcoming)
+
         home = teams.get(f["team_h"], {})
         away = teams.get(f["team_a"], {})
         result.append({

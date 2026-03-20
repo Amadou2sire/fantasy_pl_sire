@@ -239,6 +239,10 @@ async def user_team(team_id: int, gameweek: Optional[int] = Query(None)):
 
 class AdviceRequest(BaseModel):
     question: str
+    team_id: Optional[int] = None
+    league_id: Optional[int] = None
+
+
 
 class CompareRequest(BaseModel):
     players: list[str]
@@ -274,11 +278,13 @@ async def delete_template(template_id: int, db: Session = Depends(get_db)):
     return {"message": "Template supprimé"}
 
 @app.post("/api/ai/advice")
-async def ai_advice(body: AdviceRequest):
+async def ai_advice(body: AdviceRequest, db: Session = Depends(get_db)):
     try:
-        return {"answer": await ai.get_ai_advice(body.question)}
+        return {"answer": await ai.get_ai_advice(body.question, team_id=body.team_id, league_id=body.league_id, db=db)}
     except Exception as e:
+
         raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.post("/api/ai/compare")
 async def ai_compare(body: CompareRequest):

@@ -11,8 +11,8 @@ export default function Navbar() {
     { path: "/analytics", id: "analytics", label: "Analytics" },
     { path: "/transfers", id: "transfers", label: "Transferts" },
     { path: "/fixtures",  id: "fixtures",  label: "Fixtures" },
-    { path: "/advisor",   id: "advisor",   label: "Conseiller IA" },
   ];
+
 
   const isActive = (path) => location.pathname === path;
 

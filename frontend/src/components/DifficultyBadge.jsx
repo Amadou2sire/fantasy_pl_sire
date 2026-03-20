@@ -7,9 +7,11 @@ export default function DifficultyBadge({ value }) {
 
   return (
     <div className="flex justify-center">
-      <span className={`w-8 h-8 flex items-center justify-center rounded-lg text-white font-bold shadow-sm ${colorClass}`}>
-        {value || "-"}
-      </span>
+      <div 
+        title={`Difficulté: ${value}`}
+        className={`w-4 h-4 rounded-full shadow-sm ${colorClass} ring-4 ring-slate-50 dark:ring-slate-800 transition-transform hover:scale-125`}
+      />
     </div>
   );
 }
+
