@@ -116,7 +116,7 @@ export default function Players() {
   };
 
   return (
-    <main className="flex flex-col lg:flex-row gap-8 p-6 lg:p-10 max-w-[1700px] mx-auto w-full items-start">
+    <main className="flex flex-col lg:flex-row gap-10 p-6 lg:p-10 max-w-[1750px] mx-auto w-full items-start">
       
       {/* ── Left: Search & Filters (Scrollable) ── */}
       <div className="flex-1 flex flex-col gap-8">
@@ -195,8 +195,10 @@ export default function Players() {
       </div>
 
       {/* ── Right: Template Sidebar (Sticky) ── */}
-      <aside className="w-full lg:w-[420px] lg:sticky lg:top-10 flex flex-col gap-6 self-start">
-        <div className="bg-white rounded-[2.5rem] border border-slate-100 p-8 shadow-sm flex flex-col gap-8 border-b-[8px] border-b-emerald-500">
+      <aside className="w-full lg:w-[420px] lg:sticky lg:top-24 flex flex-col gap-6 self-start">
+
+
+        <div className="bg-white rounded-[2.5rem] border border-slate-100 p-8 shadow-xl shadow-slate-200/40 hover:shadow-2xl transition-all flex flex-col gap-8 border-b-[8px]">
            <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="p-3 bg-emerald-50 rounded-2xl">
@@ -280,7 +282,7 @@ export default function Players() {
           </div>
         )}
       </aside>
-
     </main>
   );
 }
+

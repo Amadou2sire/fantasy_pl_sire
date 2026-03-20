@@ -23,3 +23,6 @@ export const deleteTemplate = (id) => del(`/api/templates/${id}`);
 // Fallback old endpoints if they are revived
 export const getAIAdvice = (q) => post("/api/ai/advice", { question: q });
 export const comparePlayers = (pl) => post("/api/ai/compare", { players: pl });
+
+export const getLeagueComparison = (leagueId, userId) => get(`/api/league/${leagueId}/compare/${userId}`);
+export const getUserHistory = (id) => get(`/api/user-history/${id}`);

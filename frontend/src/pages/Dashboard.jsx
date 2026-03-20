@@ -198,7 +198,10 @@ export default function Dashboard() {
   const totalPlayers = d.players.length;
 
   return (
-    <main className="flex-1 flex flex-col max-w-[1400px] mx-auto w-full p-6 md:p-10 gap-8">
+    <main className="flex-1 flex flex-col max-w-[1700px] mx-auto w-full p-6 md:p-10 gap-10">
+
+
+
 
       {/* ── Hero Header ── */}
       <section className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
@@ -258,7 +261,9 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
         {/* Pitch Column (Left) */}
-        <div className="lg:col-span-8 flex flex-col gap-8">
+        <div className="lg:col-span-8 xl:col-span-9 flex flex-col gap-8">
+
+
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
              {/* My Team (If loaded) */}
@@ -274,8 +279,13 @@ export default function Dashboard() {
                        <p className="text-[10px] text-emerald-600 font-bold uppercase tracking-widest">{d.userTeam.team_name} · GW {d.userTeam.gameweek}</p>
                      </div>
                    </div>
-                   <div className="bg-emerald-500 text-white px-3 py-1 rounded-full text-[10px] font-black uppercase">
-                     {d.userTeam.total_points} pts
+                   <div className="flex flex-col items-end gap-1.5 text-right">
+                     <div className="bg-emerald-500 text-white px-3 py-1 rounded-full text-[10px] font-black uppercase shadow-sm">
+                       {d.userTeam.total_points} pts <span className="text-[7px] bg-white/20 px-1 rounded ml-1">Live</span>
+                     </div>
+                     <div className="bg-violet-500 text-white px-3 py-1 rounded-full text-[10px] font-black uppercase shadow-sm">
+                        {d.userTeam.team.reduce((acc, p) => acc + (p.predicted_points || 0), 0).toFixed(1)} pts <span className="text-[7px] bg-white/20 px-1 rounded ml-1">Next GW</span>
+                     </div>
                    </div>
                  </div>
                  <Pitch
@@ -299,9 +309,14 @@ export default function Dashboard() {
                   <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">GW {d.dreamTeam?.gameweek || "?"} · Points en Temps Réel</p>
                 </div>
               </div>
-              <div className="px-3 py-1 bg-slate-50 rounded-full border border-slate-100 flex items-center gap-1.5">
-                 <span className="size-2 bg-emerald-500 rounded-full animate-pulse"></span>
-                 <span className="text-[10px] font-black text-slate-800 uppercase">Live</span>
+              <div className="flex flex-col items-end gap-2">
+                <div className="bg-amber-500 text-white px-3 py-1 rounded-full text-[10px] font-black uppercase shadow-sm">
+                  {d.dreamTeam?.total_points || 0} pts
+                </div>
+                <div className="px-3 py-1 bg-slate-50 rounded-full border border-slate-100 flex items-center gap-1.5">
+                   <span className="size-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                   <span className="text-[10px] font-black text-slate-800 uppercase">Live</span>
+                </div>
               </div>
             </div>
             <Pitch
@@ -314,13 +329,18 @@ export default function Dashboard() {
 
           {/* AI Predicted XI */}
           <div className="bg-white rounded-[32px] border border-slate-100 p-6 shadow-sm">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 bg-violet-50 rounded-xl">
-                <span className="material-symbols-outlined text-violet-500">model_training</span>
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-violet-50 rounded-xl">
+                  <span className="material-symbols-outlined text-violet-500">model_training</span>
+                </div>
+                <div>
+                  <h2 className="font-black text-slate-900 uppercase tracking-tight">AI Predicted XI</h2>
+                  <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">GW {d.nextTeam?.gameweek || "?"} · Disponibilité Vérifiée</p>
+                </div>
               </div>
-              <div>
-                <h2 className="font-black text-slate-900 uppercase tracking-tight">AI Predicted XI</h2>
-                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">GW {d.nextTeam?.gameweek || "?"} · Disponibilité Vérifiée</p>
+              <div className="bg-violet-500 text-white px-3 py-1 rounded-full text-[10px] font-black uppercase shadow-sm">
+                {(d.nextTeam?.team || []).reduce((acc, p) => acc + (p.predicted_points || 0), 0).toFixed(1)} pts
               </div>
             </div>
             <Pitch
@@ -333,8 +353,12 @@ export default function Dashboard() {
         </div>
         </div>
 
-        {/* Prediction List (Right) */}
-        <div className="lg:col-span-4 bg-white rounded-[32px] border border-slate-100 shadow-sm overflow-hidden flex flex-col">
+        {/* Prediction List (Professional Sidebar) */}
+        <div className="lg:col-span-4 xl:col-span-3">
+          <div className="lg:sticky lg:top-24 bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/50 overflow-hidden flex flex-col max-h-[calc(100vh-120px)] transition-all hover:shadow-2xl">
+
+
+
           <div className="px-6 py-5 border-b border-slate-50 flex items-center gap-3">
             <div className="p-2 bg-emerald-50 rounded-xl">
               <span className="material-symbols-outlined text-emerald-500">rocket_launch</span>
@@ -344,7 +368,9 @@ export default function Dashboard() {
               <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Calculé par Intelligence Artificielle</p>
             </div>
           </div>
-          <div className="overflow-y-auto flex-1" style={{ maxHeight: "800px" }}>
+          <div className="overflow-y-auto flex-1 no-scrollbar" style={{ maxHeight: "calc(100vh - 250px)" }}>
+
+
             {topPredictions.map((pred, i) => (
               <PredRow key={pred.player_id} pred={pred} idx={i} teamMap={teamShortMap} />
             ))}
@@ -360,8 +386,10 @@ export default function Dashboard() {
           </div>
         </div>
 
+        </div>
       </div>
-
     </main>
+
+
   );
 }

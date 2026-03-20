@@ -44,4 +44,21 @@ Le backend récupère les données via l'API officielle de la Premier League :
 
 Les données sont enrichies et filtrées côté backend (`fpl_client.py`) pour fournir des indicateurs comme l'Expected Goals (xG), l'Expected Assists (xA) et le FDR (Fixture Difficulty Rating).
 
-https://api.ai.cc/
+### AI Prediction Engine (Scoring Engine)
+
+Le calcul des **Top Predictions** et du **Predicted XI** n'est pas une simple moyenne, mais un algorithme multicritères ("Scoring Engine") qui simule une intelligence analytique sportive :
+
+1. **Base de Potentiel** : Un mix pondéré entre la **forme récente** (5 derniers matchs) et la **moyenne globale de points par match (PPG)**.
+2. **Menace Offensive (xG/xA)** : Analyse des **Expected Goals (xG)** et **Expected Assists (xA)** par 90 minutes. Le poids des buts varie selon le poste (plus élevé pour un défenseur/milieu).
+3. **Indice ICT** : Intégration de l'Influence, Créativité et Menace (statistiques officielles FPL) pour évaluer l'impact réel sur le terrain.
+4. **Difficulté du Match (FDR)** : Le score est dynamiquement ajusté selon l'adversaire de la prochaine Gameweek. Un match à domicile contre une équipe faible booste le score, tandis qu'un match difficile à l'extérieur le réduit.
+5. **Bonus de Momentum** : Un multiplicateur de confiance est appliqué aux joueurs figurant dans la *Dream Team* actuelle.
+6. **Probabilité de Jeu** : Les scores sont automatiquement réduits si un joueur est blessé ou incertain (douleur, suspension).
+
+### AI Advisor (LLM)
+
+Le **Conseiller IA** (le chat et le comparateur) utilise un modèle de langage avancé (via l'API **AI.CC** ou **Groq**) qui récupère le contexte des données FPL injectées pour fournir des conseils stratégiques en langage naturel.
+
+---
+[API AI.CC](https://api.ai.cc/)
+

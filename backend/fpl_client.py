@@ -238,10 +238,13 @@ async def get_latest_dream_team_live() -> dict:
             "pos_number": pick["position"]
         })
         
+    total_points = sum(p["points"] for p in enriched_team)
+        
     return {
         "gameweek": gw_id,
         "is_live": is_live,
-        "team": enriched_team
+        "team": enriched_team,
+        "total_points": total_points
     }
 
 async def get_latest_dream_team() -> dict:
@@ -300,17 +303,16 @@ async def get_user_team(team_id: int, gameweek: Optional[int] = None) -> dict:
         
         data = r.json()
         
-        # Check if live
+        # Always fetch points for the GW to avoid showing zeros
         current_gw = await get_current_gameweek()
         is_live = current_gw.get("id") == gameweek and not current_gw.get("finished")
         
         live_points = {}
-        if is_live:
-            rl = await client.get(f"{FPL_BASE}/event/{gameweek}/live/")
-            if rl.status_code == 200:
-                live_data = rl.json()
-                for el in live_data.get("elements", []):
-                    live_points[el["id"]] = el["stats"]["total_points"]
+        rl = await client.get(f"{FPL_BASE}/event/{gameweek}/live/")
+        if rl.status_code == 200:
+            live_data = rl.json()
+            for el in live_data.get("elements", []):
+                live_points[el["id"]] = el["stats"]["total_points"]
 
         # Get entry details for name
         re = await client.get(f"{FPL_BASE}/entry/{team_id}/")
@@ -329,13 +331,13 @@ async def get_user_team(team_id: int, gameweek: Optional[int] = None) -> dict:
         p_info = player_dict.get(p_id, {})
         
         mult = pick.get("multiplier", 1)
-        raw_pts = live_points.get(p_id, 0) if is_live else 0
+        raw_pts = live_points.get(p_id, 0)
         
         p_data = {
             "id": p_id,
             "web_name": p_info.get("web_name", "Unknown"),
             "position": p_info.get("position", "Unknown"),
-            "points": raw_pts * mult if is_live else 0,
+            "points": raw_pts * mult,
             "team": p_info.get("team", "Unknown"),
             "is_captain": pick.get("is_captain", False),
             "is_vice_captain": pick.get("is_vice_captain", False),
@@ -350,6 +352,26 @@ async def get_user_team(team_id: int, gameweek: Optional[int] = None) -> dict:
         "gameweek": gameweek,
         "is_live": is_live,
         "team_name": team_name,
-        "total_points": total_live_points if is_live else data.get("entry_history", {}).get("points", 0),
+        "total_points": total_live_points,
         "team": [p for p in enriched_team if p["starter"]]
     }
+
+async def get_league_standings(league_id: int) -> dict:
+    """
+    Fetches classic league standings for a given league ID.
+    """
+    async with httpx.AsyncClient(timeout=15) as client:
+        r = await client.get(f"{FPL_BASE}/leagues-classic/{league_id}/standings/")
+        if r.status_code != 200:
+            return {"error": f"Ligue {league_id} introuvable", "standings": {"results": []}}
+        return r.json()
+
+async def get_user_history(team_id: int) -> dict:
+    """
+    Fetches history of gameweeks for a specific entry ID.
+    """
+    async with httpx.AsyncClient(timeout=15) as client:
+        r = await client.get(f"{FPL_BASE}/entry/{team_id}/history/")
+        if r.status_code != 200:
+            return {"error": f"Historique de l'équipe {team_id} introuvable", "current": [], "past": []}
+        return r.json()
