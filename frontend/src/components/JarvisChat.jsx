@@ -128,7 +128,8 @@ export default function JarvisChat() {
                 onChange={e => setQuestion(e.target.value)} 
                 onKeyDown={e => e.key === 'Enter' && ask()} 
                 placeholder="Posez votre question..." 
-                className="w-full bg-slate-50 border border-slate-100 rounded-full py-4 pl-6 pr-14 text-xs font-bold focus:border-emerald-600 outline-none transition-all placeholder:text-slate-300"
+                className="w-full bg-white border border-slate-300 shadow-sm rounded-full py-4 pl-6 pr-14 text-xs font-bold focus:border-emerald-600 outline-none transition-all placeholder:text-slate-300"
+
               />
               <button onClick={ask} disabled={loading} className="absolute right-1.5 size-10 bg-slate-900 text-white rounded-full flex items-center justify-center hover:bg-emerald-600 transition-all shadow-lg active:scale-95 disabled:opacity-50">
                 <span className="material-symbols-outlined text-xl">send</span>

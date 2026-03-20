@@ -225,7 +225,8 @@ export default function Dashboard() {
         <KpiCard icon="stadium"        label="Prochain GW"    value={nextGw.name || "—"} />
         <KpiCard icon="analytics"      label="Points Moyens"  value={avgGwPts}               sub="Dernier GW" />
         <KpiCard icon="groups"         label="Base de données" value={totalPlayers}          sub="Joueurs actifs" />
-        <KpiCard icon="schedule"       label="Deadline"       value={new Date(nextGw.deadline_time || Date.now()).toLocaleDateString("fr-FR", {day: "numeric", month: "long"})} sub="Transferts" />
+        <KpiCard icon="schedule"       label="Deadline"       value={new Date(nextGw.deadline_time || Date.now()).toLocaleString("fr-FR", {day: "numeric", month: "long", hour: "2-digit", minute: "2-digit"})} sub="Heure limite transferts" />
+
       </div>
 
       {/* ── My Team Search ── */}
@@ -243,7 +244,8 @@ export default function Dashboard() {
           <input 
             type="number"
             placeholder="Ex: 564231"
-            className="flex-1 sm:w-40 px-4 py-2 bg-slate-50 border border-slate-100 rounded-xl text-sm font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
+            className="flex-1 sm:w-40 px-4 py-2 bg-white border border-slate-300 shadow-sm rounded-xl text-sm font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all"
+
             value={teamIdInput}
             onChange={(e) => setTeamIdInput(e.target.value)}
           />

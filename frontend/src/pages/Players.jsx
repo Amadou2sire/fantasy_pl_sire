@@ -133,7 +133,7 @@ export default function Players() {
                 value={filters.search} 
                 onChange={e => setFilters(s => ({...s, search: e.target.value}))}
                 placeholder="Nom du joueur..." 
-                className="w-full h-12 bg-slate-50 border border-slate-100 rounded-2xl px-4 text-sm font-bold focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all" 
+                className="w-full h-12 bg-white border border-slate-300 shadow-sm rounded-2xl px-4 text-sm font-bold focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all placeholder:text-slate-300" 
               />
             </div>
             
@@ -142,7 +142,7 @@ export default function Players() {
               <select 
                 value={filters.team}
                 onChange={e => setFilters(s => ({...s, team: e.target.value}))}
-                className="w-full h-12 bg-slate-50 border border-slate-100 rounded-2xl px-4 text-sm font-bold outline-none"
+                className="w-full h-12 bg-white border border-slate-300 shadow-sm rounded-2xl px-4 text-sm font-bold focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all cursor-pointer"
               >
                 <option value="ALL">Toutes les équipes</option>
                 {data.teams.map(t => <option key={t.id} value={t.name}>{t.name}</option>)}
@@ -154,7 +154,7 @@ export default function Players() {
               <select 
                 value={filters.pos}
                 onChange={e => setFilters(s => ({...s, pos: e.target.value}))}
-                className="w-full h-12 bg-slate-50 border border-slate-100 rounded-2xl px-4 text-sm font-bold outline-none"
+                className="w-full h-12 bg-white border border-slate-300 shadow-sm rounded-2xl px-4 text-sm font-bold focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all cursor-pointer"
               >
                 <option value="ALL">Toutes les postions</option>
                 <option value="GKP">Gardiens</option>
@@ -169,8 +169,9 @@ export default function Players() {
               <select 
                 value={filters.sort}
                 onChange={e => setFilters(s => ({...s, sort: e.target.value}))}
-                className="w-full h-12 bg-slate-50 border border-slate-100 rounded-2xl px-4 text-sm font-bold outline-none"
+                className="w-full h-12 bg-white border border-slate-300 shadow-sm rounded-2xl px-4 text-sm font-bold focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all cursor-pointer"
               >
+
                 <option value="total_points">Total Points</option>
                 <option value="now_cost">Prix</option>
                 <option value="form">Forme (xPts)</option>
